@@ -6,7 +6,7 @@ A hands-on deployment of a Node.js student management application on AWS using a
 
 ## Architecture
 
-![AWS two-tier architecture](screenshots/aws-two-tier-architecture.png)
+![AWS two-tier architecture](screenshots/aws-two-tier-architecture.svg)
 
 ### Request flow
 1. Users access the application through the internet-facing Application Load Balancer over HTTP port **80**.
@@ -75,23 +75,23 @@ The following evidence is arranged in deployment flow order.
 
 ### 1. Application Load Balancer
 The internet-facing ALB is active and configured across two Availability Zones.
-![Application Load Balancer](screenshots/01-application-load-balancer.png)
+![Application Load Balancer](screenshots/01-application-load-balancer.webp)
 
 ### 2. Target group health
 The `TwoTier-App-TG` target group forwards HTTP traffic to port 3000. The captured console view shows two healthy targets.
-![Target group health](screenshots/02-target-group-health.png)
+![Target group health](screenshots/02-target-group-health.webp)
 
 ### 3. Amazon RDS MySQL
 The RDS MySQL database instance is available and configured for private database access.
-![RDS MySQL database](screenshots/03-rds-mysql-database.png)
+![RDS MySQL database](screenshots/03-rds-mysql-database.webp)
 
 ### 4. Running web application
 The Student Management System page displays the registration form and registered student records.
-![Student Management System](screenshots/04-student-management-application.png)
+![Student Management System](screenshots/04-student-management-application.webp)
 
 ### 5. EC2 application instances
 Two EC2 instances are running in `ap-south-1a` and `ap-south-1b`. Public IP values are masked in this repository screenshot.
-![EC2 instances](screenshots/05-ec2-instances.png)
+![EC2 instances](screenshots/05-ec2-instances.webp)
 
 ## Technologies and AWS services
 - **AWS:** Amazon VPC, EC2, Application Load Balancer, EC2 Target Groups, Amazon RDS for MySQL, Security Groups, Internet Gateway
@@ -107,11 +107,11 @@ aws-two-tier-web-application/
 ├── README.md
 └── screenshots/
     ├── aws-two-tier-architecture.png
-    ├── 01-application-load-balancer.png
-    ├── 02-target-group-health.png
-    ├── 03-rds-mysql-database.png
-    ├── 04-student-management-application.png
-    └── 05-ec2-instances.png
+    ├── 01-application-load-balancer.webp
+    ├── 02-target-group-health.webp
+    ├── 03-rds-mysql-database.webp
+    ├── 04-student-management-application.webp
+    └── 05-ec2-instances.webp
 ```
 
 This repository currently contains deployment documentation, an architecture diagram, and console/application evidence. The application source code can be added as a separate `application/` directory.
