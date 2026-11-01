@@ -100,21 +100,37 @@ Two EC2 instances are running in `ap-south-1a` and `ap-south-1b`. Public IP valu
 - **Operating system:** Amazon Linux 2023
 - **Service management:** Linux `systemd`
 
+## Application source code
+
+The `application/` directory contains a reproducible Node.js/Express + MySQL implementation of the documented Student Management System. It includes the backend API, browser interface, database schema, package manifest, and an environment-variable template.
+
+**Important:** This is a clean, reproducible implementation prepared from the documented behavior and interface. It is not represented as a byte-for-byte export of the original files that were created directly on the EC2 instances.
+
+See [application/README.md](application/README.md) for source details and [DEPLOYMENT.md](DEPLOYMENT.md) for the step-by-step AWS architecture, networking, security-group, database, systemd, and ALB runbook.
+
 ## Repository contents
 
 ```text
 aws-two-tier-web-application/
 ├── README.md
+├── DEPLOYMENT.md
+├── application/
+│   ├── README.md
+│   ├── package.json
+│   ├── server.js
+│   ├── .env.example
+│   ├── database/
+│   │   └── schema.sql
+│   └── public/
+│       └── index.html
 └── screenshots/
-    ├── aws-two-tier-architecture.png
+    ├── aws-two-tier-architecture.svg
     ├── 01-application-load-balancer.webp
     ├── 02-target-group-health.webp
     ├── 03-rds-mysql-database.webp
     ├── 04-student-management-application.webp
     └── 05-ec2-instances.webp
 ```
-
-This repository currently contains deployment documentation, an architecture diagram, and console/application evidence. The application source code can be added as a separate `application/` directory.
 
 ## Security reminder
 
