@@ -42,7 +42,7 @@ app.get('/health', (_req, res) => {
 app.get('/api/students', async (_req, res) => {
   try {
     const [rows] = await pool.execute(
-      'SELECT id, name, email, course, created_at FROM students ORDER BY id DESC'
+      'SELECT id, name, email, course FROM students ORDER BY id DESC'
     );
     res.status(200).json(rows);
   } catch (error) {
