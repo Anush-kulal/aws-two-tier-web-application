@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Management System</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 32px 16px; background: #f1f5f9; color: #111827; }
+    main { width: min(100%, 720px); margin: 0 auto; padding: 28px; background: #fff; border-radius: 14px; }
+    h1 { margin: 8px 0 28px; font-size: clamp(1.7rem, 4vw, 2.1rem); }
+    h2 { margin-top: 30px; font-size: 1.4rem; }
+    form { display: grid; gap: 14px; }
+    input { width: 100%; padding: 14px; border: 1px solid #9ca3af; border-radius: 4px; font-size: 1rem; }
+    button { border: 0; border-radius: 4px; padding: 14px; background: #2563eb; color: #fff; font-size: 1rem; cursor: pointer; }
+    button:disabled { opacity: .65; cursor: wait; }
+    #message { min-height: 1.4em; margin: 12px 0 0; color: #334155; }
+    #message.error { color: #b91c1c; }
+    #students { padding-left: 24px; line-height: 1.6; overflow-wrap: anywhere; }
+    .muted { color: #64748b; }
+    @media (max-width: 520px) { main { padding: 20px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Student Management System</h1>
+
+    <form id="student-form">
+      <label>
+        <span class="muted">Student name</span>
+        <input name="name" type="text" maxlength="120" placeholder="Student Name" required>
+      </label>
+      <label>
+        <span class="muted">Email</span>
+        <input name="email" type="email" maxlength="254" placeholder="Email" required>
+      </label>
+      <label>
+        <span class="muted">Course</span>
+        <input name="course" type="text" maxlength="120" placeholder="Course" required>
+      </label>
+      <button id="submit-button" type="submit">Register Student</button>
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+    <h2>Registered Students</h2>
+    <p id="loading" class="muted">Loading student records...</p>
+    <ul id="students"></ul>
+  </main>
+
+  <script>
+    const form = document.querySelector('#student-form');
+    const button = document.querySelector('#submit-button');
+    const message = document.querySelector('#message');
+    const list = document.querySelector('#students');
+    const loading = document.querySelector('#loading');
+
+    function showMessage(text, isError = false) {
+      message.textContent = text;
+      message.classList.toggle('error', isError);
+    }
+
+    async function loadStudents() {
+      loading.hidden = false;
+      loading.textContent = 'Loading student records...';
+      list.replaceChildren();
+
+      try {
+        const response = await fetch('/api/students');
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Could not load students.');
+
+        if (data.length === 0) {
+          loading.textContent = 'No students registered yet.';
+          return;
+        }
+
+        loading.hidden = true;
+        for (const student of data) {
+          const item = document.createElement('li');
+          item.textContent = `${student.name} - ${student.email} - ${student.course}`;
+          list.appendChild(item);
+        }
+      } catch (error) {
+        loading.textContent = error.message;
+      }
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      showMessage('Registering student...');
+
+      const formData = new FormData(form);
+      const student = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/api/students', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(student)
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Registration failed.');
+
+        form.reset();
+        showMessage(data.message);
+        await loadStudents();
+      } catch (error) {
+        showMessage(error.message, true);
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    loadStudents();
+  </script>
+</body>
+</html>
