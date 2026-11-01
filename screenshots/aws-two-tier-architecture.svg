@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#425a78"/></marker><style>
+.t{font:700 34px Arial;fill:#17365d}.sub{font:20px Arial;fill:#50627a}.h{font:700 22px Arial;fill:#183b62}.b{font:18px Arial;fill:#27384c}.s{font:16px Arial;fill:#536579}.box{fill:#fff;stroke:#477eae;stroke-width:3}.pub{fill:#eaf4ff;stroke:#4d8dc4;stroke-width:3}.pri{fill:#ecf7ef;stroke:#57956a;stroke-width:3}.alb{fill:#fff4dc;stroke:#c89436;stroke-width:3}.line{stroke:#425a78;stroke-width:4;fill:none;marker-end:url(#arrow)}.dbline{stroke:#57956a;stroke-width:4;fill:none;marker-end:url(#arrow)}
+</style></defs>
+<rect width="1600" height="1030" fill="#f7f9fc"/>
+<text x="800" y="54" text-anchor="middle" class="t">AWS TWO-TIER WEB APPLICATION</text>
+<text x="800" y="88" text-anchor="middle" class="sub">Deployed topology • ap-south-1 (Mumbai)</text>
+<rect x="45" y="125" width="1510" height="865" rx="24" fill="#eff4fa" stroke="#315b86" stroke-width="4"/>
+<text x="75" y="165" class="h">Custom VPC: TwoTier-Project-VPC  |  CIDR: 10.0.0.0/16</text>
+<rect x="595" y="198" width="410" height="82" rx="16" class="box"/>
+<text x="800" y="231" text-anchor="middle" class="h">Users / Internet</text><text x="800" y="258" text-anchor="middle" class="b">HTTP :80</text>
+<rect x="410" y="310" width="780" height="125" rx="18" class="alb"/>
+<text x="800" y="346" text-anchor="middle" class="h">Internet-facing Application Load Balancer</text>
+<text x="800" y="378" text-anchor="middle" class="b">TwoTier-App-ALB • Listener: HTTP :80</text>
+<text x="800" y="407" text-anchor="middle" class="s">Forwards requests to target group on HTTP :3000</text>
+<path d="M800 280 L800 307" class="line"/>
+<rect x="95" y="470" width="680" height="310" rx="20" class="pub"/>
+<rect x="825" y="470" width="680" height="310" rx="20" class="pub"/>
+<text x="125" y="510" class="h">Public-Subnet-A • ap-south-1a</text>
+<text x="855" y="510" class="h">Public-Subnet-B • ap-south-1b</text>
+<rect x="160" y="570" width="550" height="160" rx="16" class="box"/>
+<text x="435" y="610" text-anchor="middle" class="h">EC2 Application Instance 1</text>
+<text x="435" y="646" text-anchor="middle" class="b">TwoTier-App-Server-1</text>
+<text x="435" y="677" text-anchor="middle" class="s">Node.js / Express • Port 3000</text>
+<text x="435" y="705" text-anchor="middle" class="s">AZ: ap-south-1a</text>
+<rect x="890" y="570" width="550" height="160" rx="16" class="box"/>
+<text x="1165" y="610" text-anchor="middle" class="h">EC2 Application Instance 2</text>
+<text x="1165" y="646" text-anchor="middle" class="b">TwoTier-App-Server-2</text>
+<text x="1165" y="677" text-anchor="middle" class="s">Node.js / Express • Port 3000</text>
+<text x="1165" y="705" text-anchor="middle" class="s">AZ: ap-south-1b</text>
+<path d="M600 435 L435 565" class="line"/><path d="M1000 435 L1165 565" class="line"/>
+<rect x="95" y="810" width="1410" height="145" rx="20" class="pri"/>
+<text x="125" y="848" class="h">Private DB Subnets / DB Subnet Group: TwoTier-DB-Subnet-Group</text>
+<rect x="430" y="870" width="740" height="70" rx="14" class="box" style="stroke:#57956a"/>
+<text x="800" y="898" text-anchor="middle" class="h" style="fill:#28603c">Amazon RDS for MySQL</text>
+<text x="800" y="925" text-anchor="middle" class="s">two-tier-mysql-db • Port 3306 • Public access: No • Single-AZ DB instance</text>
+<path d="M435 730 L630 866" class="dbline"/><path d="M1165 730 L970 866" class="dbline"/>
+<text x="800" y="976" text-anchor="middle" class="s">Security-group flow: Internet → ALB :80 → EC2 :3000 → RDS MySQL :3306</text>
+</svg>
